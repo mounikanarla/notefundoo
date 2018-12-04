@@ -1,0 +1,51 @@
+<div fxLayout="column" fxFlex=100% fxLayoutAlign="center" class="labelbox">
+  <!--------------------Title start for Edinting Labels --------------------->
+  <div fxFlex=20%>
+    <h1 mat-dialog-title>Edit labels</h1>
+  </div>
+  <!------------------- Title ends for Edinting Labels ----------------------->
+
+  <!-------------------------  Text Area starts  ----------------------------->
+  <div fxFlex=15% class="labelflex">
+    <div fxLayoutGap="space-between" fxLayoutAlign="row" mat-dialog-content>
+      <div fxLayout="row" fxFlex=100%>
+        <div fxFlex=15%>
+          <mat-icon>clear</mat-icon>
+        </div>
+        <div fxFlex=70% data-text="Create New Label" id="label" contenteditable="true" class="label" #myLabel></div>
+        <div fxFlex=15%>
+          <mat-icon (click)="onClick()">done</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------------------- Text Area Ends ------------------------------>
+
+  <!--------------------- Printing of labels starts ----------------------->
+  <div fxFlex=50%>
+    <div *ngFor="let label of labelArray">
+      <div fxLayoutGap="space-between" fxLayout="row" fxFlex=100%>
+        <div fxFlex=15% class="lock">
+          <span><mat-icon class="icon-unlock">label</mat-icon></span>
+          <span><mat-icon class="icon-lock" (click)=delete(label.id)>delete</mat-icon></span>
+        </div>
+        <div fxFlex=70%>
+          <div [innerHTML]="label.label" fxFlex=70% class="label" *ngIf="!editable || label.label!=editLabel"></div>
+          <div [innerHTML]="label.label" fxFlex=70% contenteditable="true" class="label" *ngIf="editable && label.label== editLabel"
+            #myUpdate></div>
+        </div>
+        <div fxFlex=15%>
+          <mat-icon (click)=edit(label) *ngIf="editDoneIcon || label.id != editId">edit</mat-icon>
+          <mat-icon (click)=update(label) *ngIf="editClick && label.id == editId">done</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!------------------------- Printing of labels Ends------------------------------>
+
+  <!--------------------------- close button starts ----------------------------->
+  <div fxFlex=15%>
+    <button mat-button class="button" (click)="onClose()">Done</button>
+  </div>
+  <!--------------------------- close button Ends -------------------------------->
+</div>

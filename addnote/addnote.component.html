@@ -1,0 +1,136 @@
+<div fxLayout="row wrap">
+  <div fxFlex.lg="13%" fxFlex.md="10%" fxFlex.sm="5%" ></div>
+  <div fxFlex.lg="74%" fxFlex.md="80%" fxFlex.sm="90%" fxFlex.xs="95%" fxLayoutAlign="center" fxLayout="row wrap" fxLayoutGap.lg="30px" fxLayoutGap.md="20px" fxLayoutGap.sm="10px">
+    <!-- ---------------------mat-card starts ----------------------------->
+    <mat-card class="example-card" ngStyle.xs="width:100%" [ngClass]="{'viewgrid':condition,'viewlist':!condition}" *ngFor='let index of newData | search:searchInput' [ngStyle]="{'background-color':index.color}">
+      <!----------------------------Title printing starts ---------------------->
+      <div fxLayout="row" fxFlex="100%">
+        <div fxFlex="90%" (click)="openDialog(index)">
+          <!-------------------------- <mat-card-header> ------------------------->
+              <div [innerHTML]="index.title" id="title" contenteditable="true" class="titlebar" ></div>
+
+            <!-- <mat-card-content class="title">{{index.title }}</mat-card-content> -->
+          <!--------------------------- mat-card-header ------------------------>
+        </div>
+        <div fxFlex="10%" class="pin" >
+          <app-pin [noteid]=index (eventEmit)="emit($event)" [Pin]="index.isPined"></app-pin>
+        </div>
+      </div>
+      <!-------------------------------Title printing Ends ------------------------->
+      <!------------------------- Description Printing starts --------------------->
+      <div fxLayout="row" fxFlex="100%">
+          <div id="description" [innerHTML]="index.description" contenteditable="true"
+          class="textbar" tabindex="0" spellcheck="true"></div>
+        <!-- <mat-card-content class="description" (click)="openDialog(index)">{{index.description}}</mat-card-content> -->
+      </div>
+      <!------------------------- Description Printing Ends ------------------------>
+      <!-------------------------- Checklist Printing starts --------------------------->
+      <div class="note" *ngFor="let checkList of index.noteCheckLists">
+        <mat-checkbox fxFlex="10%" *ngIf="checkList.status=='open'&& !checkList.isDeleted" 
+        (click)=checkBox(checkList,index)></mat-checkbox>
+        <input *ngIf="!checkList.isDeleted && checkList.status=='open' " 
+        [(ngModel)]=checkList.itemName fxFlex="90%" class="note"
+          (click)="openDialog(index)" [style.backgroundColor]="index.color">
+      </div>
+      <div class="note" *ngFor="let checkList of index.noteCheckLists" fxLayout="row">
+      <mat-checkbox fxFlex="10%" checked=true *ngIf="checkList.status=='close'&& !checkList.isDeleted"
+      (click)=checkBox(checkList,index)></mat-checkbox>
+      <del *ngIf="!checkList.isDeleted && checkList.status=='close'" class="note"
+      (click)="openDialog(index)">{{checkList.itemName}}</del>
+      </div> 
+      <!-------------------------------- Checklist Printing Ends --------------------------->
+        <!---------------------------- Reminder Printing Starts ---------------------------->
+        <mat-chip-list class="margin">
+            <div fxLayout="row" *ngIf="checkReminder(index.reminder[0])">
+              <div *ngFor="let label of index.reminder">
+                <div *ngIf="((today | date:shortDate) == (label | date:shortDate))">
+                <mat-chip>
+                <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                Today {{label | date:"shortTime"}}
+                  <mat-icon matChipRemove (click)="removeRemainder(index.id)">cancel</mat-icon>
+                </mat-chip>
+              </div>
+                <div *ngIf="((tomorrow | date:shortDate) == (label | date:shortDate ))">
+                  <mat-chip>
+                  <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                 Tomorrow {{label | date:"shortTime"}}
+                    <mat-icon matChipRemove (click)="removeRemainder(index.id)">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+                <div *ngIf="((today | date:shortDate) != (label | date:shortDate) ) && ((tomorrow | date:shortDate) != (label | date:shortDate) )">                  
+                  <mat-chip>
+                  <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                    {{label | date:"medium"}}
+                  <mat-icon matChipRemove (click)="removeRemainder(index.id)">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+              </div>
+            </div>
+            <div fxLayout="row" *ngIf="!checkReminder(index.reminder[0])">
+                <div *ngFor="let label of index.reminder">
+                  <mat-chip *ngIf="!label.isDeleted" >
+                  <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                 <del> {{label | date:"medium"}}</del>
+                    <mat-icon matChipRemove (click)="removeRemainder(index.id)">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+              </div>
+            </mat-chip-list>
+            <!---------------------- Reminder Printing Ends ---------------------->
+      <!------------------ Label Printing Starts------------------------> 
+      <mat-chip-list class="margin">
+        <div *ngFor="let label of index.noteLabels" >
+          <mat-chip *ngIf="!label.isDeleted" routerLink="/home/label/{{ label.label }}"  routerLinkActive="active" (click)="labelDisplay(label.label)">
+            <span class="span">{{label.label}}</span>
+            <mat-icon matChipRemove (click)="removelabel(index,label)">cancel</mat-icon>
+          </mat-chip>
+        </div>
+      </mat-chip-list>
+      <!------------------- Label Printing Ends -------------------------> 
+      <div fxLayout="row" class="bubble" fxLayoutGap="5px">      
+        <div  (click)="opendialog(index)" *ngFor="let collab of index.collaborators">
+        <button  mat-mini-fab class="fontwidth" fxLayoutAlign="center" >{{collab.firstName | titlecase | slice : 0 : 1}}</button>
+      </div>
+    </div>
+    <div class="margin" (click)="qAndA(index.id)" *ngIf="index.questionAndAnswerNotes.length!=0">
+      <hr>  
+      <div>QusetionAsked?</div>
+    </div>
+      <div fxLayout="row" class="margin" fxLayoutGap="5px"> 
+      <div *ngIf="index.questionAndAnswerNotes.length!=0">
+         {{index.questionAndAnswerNotes[0].message}}
+      </div>
+    </div>
+        <!-------------------- Icon Print Starts ----------------------->
+      <mat-card-actions>
+        <span class=invisible>
+          <div fxFlex="100%" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center">
+            <!-- <div fxFlex="5%"></div> -->
+            <!-- <div fxFlex="90%"> -->
+              <div fxFlex="12%">
+              <app-reminder [noteid]=index (eventEmit)="emit($event)" (eventEmitReminder)="eventEmitReminder($event)"></app-reminder>
+            </div>
+            <div fxFlex="14%">
+              <app-collaborator [noteid]=index></app-collaborator>
+            </div>
+            <div fxFlex="14%">
+              <app-changecolor [noteid]=index (eventEmit)="emit($event)"></app-changecolor>
+            </div>
+            <div fxFlex="14%">
+              <app-image [noteid]=index></app-image>
+            </div>
+            <div fxFlex="12%">
+              <app-archieve [noteid]=index (eventEmit)="emit($event)" [Archive]=index.isArchived></app-archieve>
+            </div>
+            <div fxFlex>
+              <app-more [noteid]=index (eventEmit)="emit($event)" (eventEmitLabel)="eventEmitLabel($event)" [deleted]=index.isDeleted></app-more>
+            </div>
+          </div>
+        </span>
+      </mat-card-actions>
+      <!-- Icon printing Ends -->
+    </mat-card>
+    <!-- matcard Ends -->
+  </div>
+  <div fxFlex.lg="13%"  fxFlex.md="10%" fxFlex.sm="5%" ></div>
+</div>

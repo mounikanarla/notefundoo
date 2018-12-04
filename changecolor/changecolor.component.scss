@@ -1,0 +1,60 @@
+@import "../../../scss/_mixins.scss";
+@import "../../../scss/ _variables.scss";
+
+.colour {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .color1 {
+      @include color($background-color1);
+        margin-left: 1px;
+    }
+  
+  .color2 {
+    @include color($background-color2);
+  }
+  
+  .color3 {
+    @include color( $background-color3);
+}
+  
+  .color4 {
+    @include color( $background-color4);
+}
+  
+  .color5 {
+    @include color($background-color5);
+     margin-left: 1px;
+  }
+  
+  .color6 {
+    @include color( $background-color6);
+}
+  
+  .color7 {
+    @include color( $background-color7);
+ }
+  
+  .color8 {
+    @include color( $background-color8);
+ }
+  
+  .color9 {
+    @include color($background-color9);
+    margin-left: 1px;
+  }
+  
+  .color10 {
+    @include color($background-color10);
+  }
+  
+  .color11 {
+    @include color($background-color11);
+}
+  
+  .color12 {
+    @include color( $background-color12);
+}

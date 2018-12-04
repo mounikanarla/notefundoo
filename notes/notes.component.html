@@ -1,0 +1,230 @@
+<div fxLayout="column" fxFlex="100%" fxLayoutAlign="space-around center">
+    <div fxFlex=20%>
+        <!-- <div fxLayout fxFlex=100%> -->
+        <div fxFlex=100% fxLayout="row" fxLayoutAlign="space-around center">
+            <!-- <div fxFlex=25%></div> -->
+            <div fxFlex.lg=100% fxFlex.md="100%" fxFlex.sm="80%" fxFlex.xs="70%" fxLayoutAlign="center center" *ngIf="!press">
+                <mat-card class="card">
+                    <div fxFlex="70%" (click)="press=true">
+                        Take a note...
+                    </div>
+                    <div fxFlex="30%">
+                        <div fxLayout="row" fxFlex="40%">
+                            <mat-icon style="opacity: 0.5;" (click)="check=true && press=true">check_box</mat-icon>
+                        </div>
+                        <div fxFlex="40%">
+                            <mat-icon style="opacity: 0.5;">insert_photo</mat-icon>
+                        </div>
+                        <div fxFlex="20%">
+                            <mat-icon>edit</mat-icon>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+            <!-- <div fxFlex=25%></div> -->
+        </div>
+    </div>
+    <!-- </div> -->
+    <div *ngIf="press && !collab">
+        <div  fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex.lg=100% fxFlex.md="100%" fxFlex.sm="90%" fxFlex.xs="70%" fxLayoutAlign="center center">
+                <mat-card class="notecard" [ngStyle]="{'background-color':bgcolor}">
+                    <div fxLayout="column" fxFlex="100%">
+                        <div fxFlex=20%>
+                            <mat-card-header>
+                                <div fxLayout="row" fxFlex=100%>
+                                    <div fxFlex=95%>
+                                        <div data-text="Title" id="title" #title contenteditable="true" class="title" aria-multiline="true" role="textbox" aria-label="Note"
+                                            spellcheck="true"></div>
+                                    </div>
+                                    <div fxFlex=5% class="pin">
+                                        <app-pin (eventEmit)="emit($event)"></app-pin>
+                                    </div>
+                                </div>
+                            </mat-card-header>
+                        </div>
+                        <mat-card-content>
+                            <div data-text="Type your text" id="description" #description contenteditable="true" aria-multiline="true" role="textbox"
+                                aria-label="Note" spellcheck="true" class="textbar" *ngIf="!check"></div>
+                        </mat-card-content>
+                        <div fxFlex=65%>
+                            <div *ngIf="check">
+                                <div *ngFor="let data of dataarray" fxLayout="row">
+                                    <mat-checkbox fxFlex="5%" *ngIf="!data.isChecked" [(ngModel)]=data.isChecked (click)="this.isChecked = !this.isChecked;"></mat-checkbox>
+                                    <input fxFlex="90" class="textbar" [(ngModel)]=data.data *ngIf="!data.isChecked" (keydown)="editing($event.data)" [style.backgroundColor]="listColor">
+                                    <mat-icon fxFlex="4%" *ngIf="!data.isChecked" (click)=ondelete(data) matTooltip="delete">close</mat-icon>
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div fxLayout="row">
+                                    <mat-icon fxFlex="5%" *ngIf="!adding">add</mat-icon>
+                                    <mat-checkbox fxFlex="5%" *ngIf="adding" [(ngModel)]=addCheck (click)="isChecked=!isChecked"></mat-checkbox>
+
+                                    <input [(ngModel)]=data fxFlex="95%" class="textbarcheck" placeholder="list item" [style.backgroundColor]="listColor" (keydown)="enter($event)"
+                                        (keydown.backspace)="ondelete()">
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div *ngFor="let data of dataarray" fxLayout="row">
+                                    <mat-checkbox fxFlex="5%" *ngIf="data.isChecked" [(ngModel)]=data.isChecked (click)="this.isChecked = !this.isChecked;"></mat-checkbox>
+                                    <input fxFlex="90" class="textbar" [(ngModel)]=data.data *ngIf="data.isChecked" (keydown)="editing($event.data)" [style.backgroundColor]="listColor">
+                                    <mat-icon fxFlex="4%" *ngIf="data.isChecked" (click)=ondelete(data) matTooltip="delete">close</mat-icon>
+                                </div>
+                            </div>
+                            <div>
+                                <span>
+                                    <mat-chip-list>
+                                        <div *ngFor="let label of array">
+                                            <div *ngIf="(!label.isDeleted && (today | date:shortDate) == (label | date:shortDate))">
+                                                <mat-chip>
+                                                    <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                                                    Today{{label | date:"shortTime"}}
+                                                    <mat-icon matChipRemove (click)="deleteReminder(index)">cancel</mat-icon>
+                                                </mat-chip>
+                                            </div>
+                                            <div *ngIf="(!label.isDeleted && (tomorrow | date:shortDate) == (label | date:shortDate ))">
+                                                <mat-chip>
+                                                    <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                                                    Tomorrow {{label | date:"shortTime"}}
+                                                    <mat-icon matChipRemove (click)="deleteReminder(index)">cancel</mat-icon>
+                                                </mat-chip>
+                                            </div>
+                                            <div *ngIf="((today | date:shortDate) != (label | date:shortDate) ) && ((tomorrow | date:shortDate) != (label | date:shortDate) )">
+                                                <mat-chip>
+                                                    <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+                                                    {{label | date:"medium"}}
+                                                    <mat-icon matChipRemove (click)="deleteReminder(index)">cancel</mat-icon>
+                                                </mat-chip>
+                                            </div>
+                                        </div>
+                                    </mat-chip-list>
+                                </span>
+                                <span>
+                                    <mat-chip-list>
+                                        <div *ngFor="let index of labelevent">
+                                            <mat-chip *ngIf="!index.isDeleted">{{index.label}}
+                                                <mat-icon matChipRemove (click)="deleteLabel(index)">cancel</mat-icon>
+                                            </mat-chip>
+                                        </div>
+                                    </mat-chip-list>
+                                </span>
+                                <div fxLayout="row" class="bubble">      
+                                        <div  (click)="openDialog(index)" *ngFor="let collab of collabarray">
+                                        <button mat-mini-fab class="fontwidth" fxLayoutAlign="center">{{collab.firstName | titlecase | slice : 0 : 1}}</button>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div fxFlex=15%>
+                            <mat-card-actions>
+                                <div fxLayout="row" fxFlex="100%" class="icons">
+                                    <div fxFlex="80%" fxFlex.xs="75%">
+                                        <div fxFlex>
+                                            <app-reminder (eventEmitReminder)="eventEmitReminder($event)"></app-reminder>
+                                        </div>
+                                        <div fxFlex (click)="collabratorClicked()">
+                                            <span data-toggle="tooltip" title="{{!isDeleted ? 'collaborator':''}}">
+                                                <button class="collab" mat-icon-button>
+                                                    <mat-icon>person_add</mat-icon>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <div fxFlex>
+                                            <app-changecolor (eventEmit)="emit($event)"></app-changecolor>
+                                        </div>
+                                        <div fxFlex>
+                                            <app-image></app-image>
+                                        </div>
+                                        <div fxFlex>
+                                            <app-archieve (eventEmit)="emit($event)"></app-archieve>
+                                        </div>
+                                        <div fxFlex>
+                                            <app-more (eventEmit)="emit($event)" (eventEmitLabel)="eventEmitLabel($event)"></app-more>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="20%" fxFlex.xs="25%" class="button">
+                                        <!-- <div> -->
+                                        <button mat-button (click)="notes();check=false">CLOSE</button>
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+    <div>
+        <app-addnote></app-addnote>
+    </div>
+    <div *ngIf="collab">
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex.lg=100% fxFlex.md="100%" fxFlex.sm="90%" fxFlex.xs="65%" fxLayoutAlign="center center">
+                <mat-card class="collabcard">
+                    <mat-card-header>
+                        <div class="collab">Collaborators</div>
+                    </mat-card-header>
+                    <hr>
+                    <mat-card-content>
+                        <div fxLayout="column" fxLayoutGap="20px">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
+                                <div fxFlex="8" fxLayoutAlign="center"><button mat-mini-fab [ngStyle]="{'background-image':'url(' +img+ ')','background-size':'cover'}">
+                                    </button></div>
+                                <div fxFlex="88">
+                                    <mat-content class="content" fxLayoutAlign="space-between center">
+                                        <div fxLayout="column" fxFlex="100">
+                                            <div fxFlex>{{firstName | titlecase}} {{lastName | titlecase}} (Owner)</div>
+                                            <div class="contentNew">
+                                                <mat-content fxFlex>{{email}}</mat-content>
+                                            </div>
+                                        </div>
+                                    </mat-content>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space" fxLayout="column" fxLayoutGap="20px">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100" *ngFor='let collab of collabarray'>
+                                <div fxFlex="8"><button mat-mini-fab><mat-icon fxflex fxLayoutAlign="center">{{collab.firstName
+                                            | titlecase | slice : 0 : 1}}</mat-icon></button></div>
+                                <div fxFlex="82">
+                                    <mat-content class="content1">
+                                        <div fxLayout="column" fxFlex="100">
+                                            <div fxFlex>{{collab.firstName | titlecase}} {{collab.lastName | titlecase}}</div>
+                                            <div class="colabemail">
+                                                <mat-content>{{collab.email}}</mat-content>
+                                            </div>
+                                        </div>
+                                    </mat-content>
+                                </div>
+                                <div fxFlex="10" (click)="removeCollaborator(collab)"><i class="material-icons">clear</i></div>
+                            </div>
+                        </div>
+                        <div class="person" fxLayout="column" fxLayoutGap="20px">
+                            <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
+                                <div fxFlex="8" fxLayoutAlign="center"><button mat-mini-fab disabled><mat-icon>person_add</mat-icon></button></div>
+                                <div fxFlex="88">
+                                    <span><input class="place" [(ngModel)]="searchInput" [matMenuTriggerFor]="menu" (keyup)="search()"
+                                            placeholder="person or email to share with..."></span>
+                                    <span *ngIf="searchInput"><mat-button class="tick" (click)=addCollabdone()>
+                                            <mat-icon>done</mat-icon>
+                                        </mat-button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <mat-menu [overlapTrigger]="false" class="colabwidth" (click)="$event.stopPropagation()" #menu="matMenu">
+                        <div class="colabwidth" *ngFor="let user of searchResult" (click)="userSelected(user)">
+                             [{{user.email}}]
+                        </div>
+                    </mat-menu>
+                    <div >
+                    <mat-card-footer  class="colour" fxLayoutAlign="end">
+                            <button  mat-button (click)=cancel()>Close</button>
+                            <button  mat-button (click)=addCollab()>Save</button>
+                    </mat-card-footer>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

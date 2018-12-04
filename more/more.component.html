@@ -1,0 +1,32 @@
+<span data-toggle="tooltip" title="{{!isDeleted ? 'more':''}}">
+  <!-- More Icon Printig Starts -->
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon class="more">more_vert</mat-icon>
+  </button>
+  <!-- More Icon Printig ends -->
+<!-- Printing the list inside menu Starts-->
+<!-- Delete Note Starts -->
+  <mat-menu #menu="matMenu" class="menu">
+    <button (click)=delData(true) *ngIf="!isDeleted" mat-menu-item>Delete Note</button>
+    <button (click)=delData(false) *ngIf="isDeleted" mat-menu-item>Restore Note</button>
+<!-- Delete Note Ends -->
+    <!-- Add Label Printing starts -->
+    <button mat-menu-item [matMenuTriggerFor]="addLabel" *ngIf="!isDeleted" (click)=" $event.stopPropagation();">Add Label</button>
+    <mat-menu #addLabel="matMenu">
+      <span>Label Note</span>
+      <div (click)=" $event.stopPropagation();">
+        <input matInput placeholder="search" class="searchicon" [(ngModel)]="query">
+        <mat-icon>search</mat-icon>
+      </div>
+      <div *ngFor="let label of array | search: query">
+        <mat-checkbox (click)="$event.stopPropagation(); addChecklabel(label)" [(ngModel)]="label.isChecked">{{ label.label}}</mat-checkbox>
+        <!-- <input (click)=" $event.stopPropagation();"><mat-checkbox (click)="$event.stopPropagation(); removelabel(label)" *ngIf="label.isChecked==false"></mat-checkbox> -->
+      </div>
+    </mat-menu>
+    <!-- Add Label Printing Ends -->
+
+    <button mat-menu-item (click)="questions()" *ngIf="!isDeleted">Ask Questions</button>
+    <button mat-menu-item *ngIf="isDeleted" (click)="deleteForever()">Delete Forever</button>
+  </mat-menu>
+  <!-- Printing the list inside menu Ends -->
+</span>

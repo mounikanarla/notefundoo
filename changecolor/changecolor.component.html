@@ -1,0 +1,83 @@
+<span data-toggle="tooltip" title="{{!isDeleted ? 'color':''}}">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon class="colour" *ngIf="!isDeleted">color_lens</mat-icon>
+    </button>
+    <!--Starts  Displaying colors-->
+    <mat-menu #menu="matMenu" class="menu">
+        <div fxLayout="column" fxFlex=100%>
+            <div fxFlex=33%>
+                <div fxLayout="row" fxFlex=100%>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="white">
+                            <button mat-mini-fab class="color1" (click)="changeColor('#FFFFFF')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Crimson">
+                            <button mat-mini-fab class="color2" (click)="changeColor('#DC143C')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Orange">
+                            <button mat-mini-fab class="color3" (click)="changeColor('#FF8C00')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Yellow">
+                            <button mat-mini-fab class="color4" (click)="changeColor('#FFFF99')"></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex=33% style="margin-top:5px">
+                <div fxLayout="row" fxFlex=100%>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Sea Green">
+                            <button mat-mini-fab class="color5" (click)="changeColor('#2E8B57')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Teal">
+                            <button mat-mini-fab class="color6" (click)="changeColor('#008080')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="SkyBlue">
+                            <button mat-mini-fab class="color7" (click)="changeColor('#87CEEB')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Chocolate">
+                            <button mat-mini-fab class="color8" (click)="changeColor('#D2691E')"></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex=33% style="margin-top:5px">
+                <div fxLayout="row" fxFlex=100%>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Plum">
+                            <button mat-mini-fab class="color9" (click)="changeColor('#DDA0DD')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Pink">
+                            <button mat-mini-fab class="color10" (click)="changeColor('#FFC0CB')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Brown">
+                            <button mat-mini-fab class="color11" (click)="changeColor('#A52A2A')"></button>
+                        </span>
+                    </div>
+                    <div fxFlex=25%>
+                        <span data-toggle="tooltip" title="Grey">
+                            <button mat-mini-fab class="color12" (click)="changeColor('#C0C0C0')"></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-menu>
+    <!--Ends  Displaying colors-->
+</span>

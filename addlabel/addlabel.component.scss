@@ -1,0 +1,52 @@
+@import "../../../scss/_mixins.scss";
+
+.labelbox {
+    width: 300px;
+    @include margins(0px,0px,30px,0px);
+
+    // margin-bottom: 30px;
+  }
+  
+  .label {
+    @include border;
+
+    width: 100%;
+    height: auto;
+    @include labelDisplay();
+    &:empty:before {
+      content: attr(data-text);
+    }
+  }
+  
+  .clear {
+    @include margins(0px,0px,0px,10px);
+
+    // margin-left: 10px;
+  }
+  
+  .input {
+    @include border;
+    font-size: 18px;
+  }
+  
+  .button {
+    @include margins(10%,0%,0%,70%);
+
+    // margin-top: 10%;
+    // margin-left: 70%;
+  }
+  
+  .lock {
+    &:hover .icon-unlock, .icon-lock {
+      display: none;
+    }
+    &:hover .icon-lock {
+      display: inline;
+    }
+  }
+  
+  .labelflex {
+    @include margins(10px,0px,0px,0px);
+
+    // margin-top: 10px;
+  }

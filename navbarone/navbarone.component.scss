@@ -1,0 +1,267 @@
+@import "../../../scss/_mixins.scss";
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  // @include margins(56px,0px,0px,-15px);
+  width: 270px;
+  background-color:$background-color14;
+  position: fixed;
+}
+@media screen and (max-device-width : 768px)
+{
+  .sidenav  {
+    margin-top:64px;
+  }
+}
+@media screen and (max-device-width : 425px)
+{
+  .sidenav  {
+    margin-top:56px;
+  }
+}
+
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+}
+
+.mat-drawer.mat-drawer-side {
+  top: 0;
+  height: 100%;
+  @include margins(64px,0px,0px,0px);
+  z-index: 1;
+}
+
+.mat-toolbar.mat-primary {
+  background: #fb0;
+  color:$background-color1
+}
+
+.searchbar {
+  height: 40px;
+  width: 300%;
+  @include border;
+  background-color:$background-color15;
+  padding-left: 30px;
+  color:$background-color13;
+  border-radius: 10px;
+}
+
+input:focus {
+  background: $background-color1;
+}
+
+.notes, .remainder {
+  padding-left: 15px;
+}
+
+.edit {
+  border: none;
+  height: 20px;
+  width: 50px; 
+   @include margins(0px,20px,0px,98px);
+
+  // margin-left: 98px;
+  // margin-right: 20px;
+}
+
+.label {
+  @include margins(0px,0px,0px,20px);
+
+  // margin-left: 20px;
+  font-size: 15px;
+}
+
+.example-card {
+  max-width: 300px;
+  position: absolute;
+  z-index: 10;
+  top: 65px;
+  right: 2px;
+}
+
+.example-header-image {
+  background-size: cover;
+  background-color: navy;
+}
+
+.letter {
+  @include margins(0px,0px,0px,10.5px);
+
+  color: $background-color1;
+  // margin-left: 10.5px;
+  font-size: 30px;
+  font-family: 'Times New Roman', Times, serif;
+  margin-top: 10%;
+}
+
+.account, .word {
+  font-size: 30px;
+}
+
+.mat-fab .mat-button-wrapper {
+  padding: 0px;
+  display: inline-block;
+  line-height: 24px;
+}
+
+.printlabel {
+  @include margins(15px,0px,0px,5px);
+
+  // margin-left: 5px;
+  // margin-top: 15px;
+}
+
+.space {
+  @include margins(0px,20px,0px,0px);
+
+  // margin-right: 20px;
+}
+
+.displayname {
+  color: $background-color13;
+  font-family: Bookman, URW Bookman L, serif;
+  // margin-left: 10px;
+  @include margins(0px,0px,0px,10px);
+
+}
+
+.menuicon {
+  color: $background-color13;
+}
+
+.searchicon {
+  @include margins(20px,0px,0px,0px);
+
+  // margin-top: 20px;
+  color: $background-color13;
+  position: fixed;
+  top: 0px;
+}
+
+.sideicon {
+  @include margins(10px,0px,0px,0px);
+
+  // margin-top: 10px;
+  color:$background-color13;
+}
+
+.profileicon {
+  float: right;
+  // margin-left: 30%;
+  @include margins(0%,0%,0%,30%);
+
+}
+
+.image {
+  width: 15%;
+  float: left;
+}
+
+.buttonimage {
+  @include margins(0%,15%,0%,0%);
+
+  // margin-right: 15%;
+}
+
+.logoutButton {
+  float: right;
+  @include margins(0px,10px,0px,0px);
+
+  // margin-right: 10px;
+}
+
+.style {
+  @include margins(30px,0px,0px,10px);
+
+//   margin-left: 10px;
+//   margin-top: 30px;
+}
+
+.routename {
+  color: $background-color13;
+  font-size: 16px;
+  @include labelDisplay();
+   width: 70%;
+}
+
+.line {
+  @include margins(10px,0px,0px,0px);
+
+  // margin-top: 10px;
+}
+
+.change {
+  color: $background-color13;
+  @include margins(20px,0px,0px,0px);
+
+  // margin-top: 20px;
+}
+
+.display {
+  @include labelDisplay();
+}
+@media screen and (max-device-width : 320px)
+{
+  .routename  {
+    font-size: 5px;
+  }
+}
+@media screen and (max-device-width : 1440px)
+{
+  .routename  {
+    font-size:20px;
+  }
+}
+// .spin{
+//   margin-top:22%
+// }
+// .loader,
+// .loader:after {
+//   border-radius: 50%;
+//   width: 1em;
+//   height: 1em;
+
+// }
+// .loader {
+//   margin: 60px auto;
+//   font-size: 8px;
+//   position: relative;
+//   text-indent: -9999em;
+//   border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+//   border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+//   border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+//   border-left: 1.1em solid #ffffff;
+//   -webkit-transform: translateZ(0);
+//   -ms-transform: translateZ(0);
+//   transform: translateZ(0);
+//   -webkit-animation: load8 3s linear;
+//   animation: load8 3s linear;
+// }
+// @-webkit-keyframes load8 {
+//   0% {
+//     -webkit-transform: rotate(0deg);
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     -webkit-transform: rotate(360deg);
+//     transform: rotate(360deg);
+//   }
+// }
+// @keyframes load8 {
+//   0% {
+//     -webkit-transform: rotate(0deg);
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     -webkit-transform: rotate(360deg);
+//     transform: rotate(360deg);
+//   }
+// }
+
+

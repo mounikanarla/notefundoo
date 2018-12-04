@@ -1,0 +1,4 @@
+<div style="position:relative">
+    <app-notes (onNewEntryAdded)="addNewEntry($event)"></app-notes>
+    <app-addnote  [newData]=reminderArray (eventEmit)="emit($event)"></app-addnote>
+</div>

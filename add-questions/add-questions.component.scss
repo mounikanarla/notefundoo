@@ -1,0 +1,102 @@
+@import "../../../scss/ _variables.scss";
+@import "../../../scss/_mixins.scss";
+
+.span{
+    font-size:10px;
+    @include margins(0px,0px,0px,5px);
+}
+.questionNote{
+    @include margins(30px,0px,0px,10px);
+}
+.ques{
+    @include margins(10px,0px,0px,0px);
+}
+.text{
+    @include margins(18px,0px,0px,0px);
+      font-size:22px;
+}
+.descNote{
+    
+    font-size:20px;
+    word-wrap: wrap break-word;
+}
+.titleNote{
+    font-size:25px;
+}
+.newMsg{
+    @include margins(15px,0px,0px,0px);
+    opacity:0.54;
+}
+.user{
+    font-size:12px;
+    font-family: cursive;
+}
+.fabBtn{
+    @include margins(20px,0px,0px,0px);
+}
+.fabBtn1{
+    @include margins(0px,0px,0px,0px);
+}
+.count{
+    @include margins(3px,0px,0px,0px);
+}
+.rate{
+    @include margins(-25px,0px,0px,15px);
+}
+.icons{
+    @include margins(0px,0px,0px,0px);
+}
+.icon{
+    cursor: pointer;
+    margin-top: -25px;
+
+}
+.msg{
+    font-size:17px;
+    word-wrap: break-word;
+    // white-space: pre-wrap;
+
+}
+.msgNew{
+    @include margins(0px,0px,0px,10px);
+}
+.textNew{
+    @include margins(30px,0px,0px,50px);
+    width:800px;
+    @include border;
+}
+.question{
+    @include border; 
+}
+.scroll{
+    max-height:500px;
+    overflow-y:auto;
+    overflow-x:hidden !important;
+}
+.textbar {
+    width: 100%;
+    height: 50%;
+    @include border;
+    border-bottom: 1px solid #aaa;
+    @include margins(10px,0px,0px,0px);
+
+    &:empty:not(:focus):before {
+      content: attr(data-text);
+     display: block;
+    }
+  }
+  .reply{
+      margin-bottom:20px;
+  }
+  .buttonreply{
+      margin-left:10px;
+      @include border;
+      background-color:white;
+
+  }
+ @media screen and (max-device-width : 320px)
+{
+.icons {
+    flex-direction: column;
+  }
+}

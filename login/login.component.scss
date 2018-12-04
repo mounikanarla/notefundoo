@@ -1,0 +1,36 @@
+
+@import "../../../scss/ _variables.scss";
+
+.container {
+    min-height: 100vh;
+  }
+  
+  .line {
+    width: 180%;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .mat-form-field-underline {
+    width: 180%;
+  }
+  
+  .color1 {
+    color:$brand-color;
+  }
+  
+  .color2 {
+    color:$brand-color1;
+  }
+  
+  .color3 {
+    color:$brand-color2;
+  }

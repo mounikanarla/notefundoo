@@ -1,0 +1,5 @@
+<span data-toggle="tooltip" title="{{!isDeleted ? 'collaborator':''}}">
+  <button mat-icon-button>
+    <mat-icon class="collab"  (click)="openDialog(note)"  *ngIf="!isDeleted">person_add</mat-icon>
+  </button>
+</span>

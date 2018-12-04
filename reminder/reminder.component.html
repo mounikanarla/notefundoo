@@ -1,0 +1,66 @@
+<span data-toggle="tooltip" title="{{!isDeleted ? 'Remind Me':''}}">
+  <button mat-icon-button>
+    <mat-icon class="remain" *ngIf="!isDeleted" [matMenuTriggerFor]="menu" (click)="$event.stopPropagation() && reminder()">add_alert</mat-icon>
+  </button>
+</span>
+<mat-menu (click)="$event.stopPropagation();" class="menu" #menu="matMenu" [overlapTrigger]="false">
+    <div *ngIf="flag===false">    
+    <button (click)="$event.stopPropagation();" mat-menu-item><span>Reminder : </span></button>
+    <button (click)="$event.stopPropagation();" mat-menu-item>
+        <div><span (click)="remindToday()">Later today</span>
+            <span class="spaceremain">8:00 PM</span></div>
+    </button>
+    <button (click)="$event.stopPropagation();" mat-menu-item>
+        <div><span (click)="remindTomorrow()">Tomorrow </span>
+            <span class="spaceremain">8:00 AM</span></div>
+    </button>
+    <button (click)="$event.stopPropagation();" mat-menu-item>
+        <div><span (click)="weekRemainder()">Next week</span>
+            <span class="remainder">Mon,8:00 AM</span></div>
+    </button>
+   
+    <div fxLayoutAlign="row">
+        <mat-icon class="clock" mat-icon-button>access_time</mat-icon>
+        <button (click)="$event.stopPropagation();" (click)="flag=true" mat-menu-item><span>Pick date & time
+            </span></button>
+    </div>
+</div>
+    <div *ngIf="flag === true" class="menu">
+        <div fxLayout="row" fxLayoutAlign="start center">
+           <div fxFlex=15><mat-icon mat-icon-button (click)="flag = false && $event.stopPropagation();">keyboard_backspace</mat-icon></div>
+           <div fxFlex=60 ><span class="place1">Pick Date & Time</span><br></div>
+          </div>
+          <mat-divider></mat-divider>
+          <div fxLayout="column" fxLayoutAlign="center center">
+          <mat-form-field>
+              <input (click)="$event.stopPropagation();" [min]="today" matInput [matDatepicker]="dp"  [(ngModel)]= "reminderBody.date.value" [formControl]="date">
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field>
+          <div fxLayout="row" fxLayoutAlign="center center" >
+            <mat-form-field (click)="$event.stopPropagation()">
+                <input matInput placeholder="Choose Time" (click)="$event.stopPropagation()" [matMenuTriggerFor]="timeMenu" [(ngModel)]="reminderBody.time" (keyup)="disable(event)" >
+            </mat-form-field>
+                <mat-icon (click)="$event.stopPropagation()" [matMenuTriggerFor]="timeMenu" class="timeSet">keyboard_arrow_down</mat-icon>
+        </div>
+        </div>
+        <mat-menu #timeMenu [overlapTrigger]=false class="menu">
+        <div fxLayout="column" *ngFor="let time of reminders" class="adjust">
+            <button mat-button [disabled]="time.disableStatus"  (click)="reminderBody.time = time.viewTime; dateflag=true"   (click)="$event.stopPropagation()">
+                    <div fxFlex="35" >{{time.viewPeriod}}</div>
+                    <div fxFlex="40"></div>
+                    <div fxFlex="30">{{time.viewTime}}</div>
+            </button>
+        </div>
+        <div>
+            <button mat-button (click)="$event.stopPropagation()" class="custom">Custom Time</button>
+        </div>
+    </mat-menu>
+    <div><button mat-button [disabled]="dateflag==false" (click)="addCustomRemainders(reminderBody.date.value,reminderBody.time)">Save</button></div>
+</div>
+</mat-menu>
+
+
+
+
+    

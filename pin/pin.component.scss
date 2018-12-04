@@ -1,0 +1,13 @@
+@import "../../../scss/_mixins.scss";
+
+.notepin {
+    opacity: 1;
+    cursor: pointer;
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+ .pintop1 {
+    @include margins(0px,0px,20px,0px);
+}

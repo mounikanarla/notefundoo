@@ -1,0 +1,52 @@
+@import "../../../scss/_mixins.scss";
+
+.remain {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .spaceremain {
+    float: right;
+  }
+  
+  .remainder {
+    @include margins(0px,0px,0px,40px);
+
+    float: right;
+    // margin-left: 40px;
+  }
+  
+  .clock {
+    @include margins(10px,0px,0px,0px);
+  }
+  
+  .button {
+    float: right;
+  }
+  
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  
+  .timeSpace {
+    float: right;
+  }
+  
+  .noonSpace {
+    @include margins(0px,0px,0px,20px);
+
+    // margin-left: 20px;
+  }
+  
+   .adjust {
+    height: 40px;
+    width: 200px;
+  }

@@ -1,0 +1,16 @@
+@import "../../../scss/_mixins.scss";
+
+.more {
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  
+  .down {
+    @include margins(50%,0%,0%,0%);
+}
+  
+  .searchicon {
+      @include border;
+  }

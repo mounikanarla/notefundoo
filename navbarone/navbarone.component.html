@@ -1,0 +1,112 @@
+<div fxFlex>
+  <div fxLayout="column">
+    <mat-toolbar color="primary" position="fixed">
+      <div fxLayout="row" fxFlex.lg="20%" fxFlex.md="20%" fxFlex.sm="20%" fxFlex.xs="35%">
+        <div fxLayout="row" fxFlex="100%">
+          <div fxFlex.lg="20%" fxFlex.md="20%" fxFlex.sm="30%" fxFlex.xs="40%">
+           <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+            <mat-icon class="menuicon" aria-label="Side nav toggle icon">menu</mat-icon>
+            </button>
+        </div>
+        <div fxFlex.lg="80%" fxFLex.md="80%"  fxFLex.sm="70%"  fxFLex.xs="60%"fxLayoutAlign="space-around center">
+          <span class="routename">{{name}}</span>
+        </div>
+      </div>
+      </div>
+      <div fxLayout="row" fxFlex.lg="60%" fxFlex.md="60%" fxFlex.sm="60%" fxFlex.xs="45%" fxLayoutAlign="space-around center">
+        <span><mat-icon class="searchicon" >search</mat-icon> </span>
+        <input class=searchbar type=text matInput placeholder="search" [(ngModel)]="searchInput" (click)="clicksearch()" (keydown)="newMessage()">
+      </div>
+      <div fxLayout="row"  fxFlex.lg="20%"  fxFlex.md="20%" fxFlex.sm="20%"  fxFlex.xs="20%">
+        <div fxLayout="row" fxFlex="100%">
+          <!-- <div fxFlex.lg="30%" fxFlex.md="30%" fxFlex.sm="20%" fxFlex.xs="50%" fxLayoutAlign="center">
+            <span class="loader"><mat-icon>refresh</mat-icon></span>
+          </div> -->
+          <div fxFlex.lg="70%" fxFlex.md="70%" fxFlex.sm="60%" fxHide.xs="true" fxLayoutAlign="center"  class="spin" >
+             <div class="sideicon"><mat-icon *ngIf="number==1" (click)="listview()"  aria-label="Side nav toggle icon" matTooltip="list view">view_stream</mat-icon></div>
+            <div class="sideicon"><mat-icon *ngIf="number==0" (click)="gridview()" aria-label="Side nav toggle icon" matTooltip="grid view">grid_view</mat-icon></div> 
+          </div>
+          <!-- Profile Starts -->
+          <div fxFlex.lg="30%" fxFlex.md="30"  fxFlex.sm="40%" fxFlex.xs="100%" fxLayoutAlign="end" fxLayoutAlign="end" class="spin">
+            <button (click) = "$event.stopPropagation()" [ngStyle]="{'float':'left','background-image':'url('+img+')','background-size':'cover'}"
+                matTooltip="fundoo Account" mat-mini-fab [matMenuTriggerFor]="appMenu" style="background-color:navy;float:right;color:white;text-transform:uppercase;">
+               </button>
+              <mat-menu  #appMenu="matMenu" [overlapTrigger]="false" style="width:20%">
+                  <div fxLayout="row" fxFlex="100%">
+                  <div fxFlex="40%">  
+                      <button (click) = "$event.stopPropagation()" class="buttonimage" [ngStyle]="{'float':'left','background-image':'url(' +img+ ')','background-size':'cover'}" (click)="selectFile.click()" matTooltip="fundoo Account" mat-mini-fab style="background-color:navy;float:right;color:white;text-transform:uppercase; margin-left: 10px;height:100px;width:100px">
+                          <input fxHide="true" (click) = "$event.stopPropagation()" class="image" type="file"
+                          (change)=fileSelected($event) #selectFile>
+                          <p class="change">Change</p>
+                      </button>
+                  </div>
+                  <div  fxFlex="60%" fxLayoutAlign="center">
+                  <mat-content class="style">
+                    {{firstName}}&nbsp;{{lastName}}
+                    {{email}}
+                  </mat-content>
+                  </div>  
+              </div>
+              <div class="line"><mat-divider></mat-divider></div>
+              <div fxLayoutAlign="center center">
+              <span class="logoutButton"><button mat-button (click)=logout()>Logout</button></span>
+              </div>
+            </mat-menu>
+          </div>
+            <!--------------------- Profile Ends ------------------------------------>
+        </div>
+      </div>
+    </mat-toolbar>
+    <!-------------------------------Sidenav Starts---------------------------------------->
+    <mat-sidenav-container class="sidenav-container">
+      <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+        <mat-nav-list>
+          <a mat-list-item routerLink="/home/notes" routerLinkActive="active" routerLinkActiveOptions="{exact:true}" (click)="titleDisplay('Fundoo')"><img src="../../../assets/notes.svg"><span
+              class="notes">Notes</span></a>
+          <a mat-list-item routerLink="/home/reminders" routerLinkActive="active" routerLinkActiveOptions="{exact:true}" (click)="titleDisplay('Reminders')"><img src="../../../assets/remainder.svg"><span class="remainder">Reminders</span></a>
+        </mat-nav-list>
+        <hr>
+        <div class="label">
+          <a mat-list-item>Labels<button class="edit" (click)=addlabel()>Edit</button></a>
+        </div>
+        <mat-nav-list>
+          <div *ngFor="let list of array" class="printlabel">
+            <a mat-list-item routerLink="/home/label/{{ list.label }}"  routerLinkActive="active" routerLinkActiveOptions="{exact:true}" (click)="labelDisplay(list)" (eventEmit)="emit($event)"> <mat-icon class="material-icons"
+                class="space">label_outline</mat-icon><span class="display">{{ list.label }}</span></a>
+          </div>
+        </mat-nav-list>
+
+        <mat-nav-list>
+          <a mat-list-item (click)=addlabel()><img src="../../../assets/label.svg"><span class="remainder">Create New Label</span></a>
+        </mat-nav-list>
+        <hr>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/home/archive" routerLinkActive="active" routerLinkActiveOptions="{exact:true}" (click)="titleDisplay('Archive')"><img src="../../../assets/archive.svg"><span
+              class="notes">Archive</span></a>
+          <a mat-list-item routerLink="/home/trash" routerLinkActive="active" routerLinkActiveOptions="{exact:true}" (click)="titleDisplay('Trash')"><img src="../../../assets/trash.svg"><span
+              class="remainder">Trash</span></a>
+        </mat-nav-list>
+        <hr>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/home/payment" routerLinkActive="active"><img src="../../../assets/settings.svg"><span class="notes">Shopping card</span></a>
+          <a mat-list-item ><img src="../../../assets/settings.svg"><span class="notes">Settings</span></a>
+        </mat-nav-list> 
+      </mat-sidenav>
+      <mat-sidenav-content style="width:-webkit-fill-available;position:fixed;box-align: center">
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+  <!---------------------- Sidenav Ends ----------------------------------->
+</div>
+
+
+
+
+
+
+
+
+
+
